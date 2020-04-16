@@ -26,3 +26,20 @@ def person(request, name):
 		return Response({'error':'this user does not exist'})
 	ser_data = PersonSerializer(person)
 	return Response(ser_data.data)
+
+@api_view(['POST'])
+def person_create(request):
+	info = PersonSerializer(data=request.data)
+	if info.is_valid():
+		Person(name=info.validated_data['name'], age=info.validated_data['age'], email=info.validated_data['email']).save()
+		return Response({'message':'ok'})
+	else:
+		return Response(info.errors)
+
+
+
+
+
+
+
+
