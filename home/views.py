@@ -17,3 +17,12 @@ def persons(request):
 	persons = Person.objects.all()
 	ser_data = PersonSerializer(persons, many=True)
 	return Response(ser_data.data)
+
+@api_view()
+def person(request, name):
+	try:
+		person = Person.objects.get(name=name)
+	except Person.DoesNotExist:
+		return Response({'error':'this user does not exist'})
+	ser_data = PersonSerializer(person)
+	return Response(ser_data.data)
