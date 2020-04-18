@@ -1,8 +1,9 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from .serializers import PersonSerializer
 from .models import Person
 from rest_framework import status
+from rest_framework.permissions import IsAdminUser
 
 
 @api_view(['GET', 'POST'])
@@ -20,6 +21,7 @@ def persons(request):
 	return Response(ser_data.data, status=status.HTTP_200_OK)
 
 @api_view()
+@permission_classes([IsAdminUser,])
 def person(request, name):
 	try:
 		person = Person.objects.get(name=name)
