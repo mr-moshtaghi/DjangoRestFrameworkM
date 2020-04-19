@@ -9,3 +9,8 @@ class PersonSerializer(serializers.ModelSerializer):
 		extra_kwargs = {
 			'email':{'write_only':True}
 		}
+
+	def validate_name(self, value):
+		if value == 'admin':
+			raise serializers.ValidationError('name cant be admin')
+		return value
