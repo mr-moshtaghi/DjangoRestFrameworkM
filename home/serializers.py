@@ -3,9 +3,10 @@ from .models import Person
 
 
 class PersonSerializer(serializers.ModelSerializer):
+	car = serializers.SlugRelatedField(slug_field='model', read_only=True)
 	class Meta:
 		model = Person
-		fields = ('id', 'name', 'age', 'email')
+		fields = ('id', 'name', 'age', 'email', 'car')
 		extra_kwargs = {
 			'email':{'write_only':True}
 		}
